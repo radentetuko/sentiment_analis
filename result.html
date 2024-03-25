@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Result of Sentiment Analysis</h1>
+    <p>Sentiment Score: {{ sentiment }}</p>
+
+    <div id="rating_counts">
+        <h2>Rating Counts</h2>
+        <ul>
+            {% for rating, count in rating_counts.items() %}
+                <li>Rating {{ rating }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="common_words">
+        <h2>Common Words</h2>
+        <ul>
+            {% for word, count in common_words %}
+                <li>{{ word }} ({{ count }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+
+    <div id="sentiment_chart">
+        <h2>Sentiment Chart</h2>
+        <div id="positive_chart" style="width: 50%; display: inline-block;"></div>
+        <div id="negative_chart" style="width: 50%; display: inline-block;"></div>
+    </div>
+
+    <script>
+        var positiveData = {
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            y: [5, 3, 4, 6, 7, 8, 9, 10, 12, 13, 15, 16],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Positive Sentiment'
+        };
+
+        var negativeData = {
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            y: [3, 4, 5, 2, 4, 5, 3, 6, 8, 7, 6, 5],
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Negative Sentiment'
+        };
+
+        var layout = {
+            title: 'Sentiment Over Time',
+            xaxis: {
+                title: 'Month'
+            },
+            yaxis: {
+                title: 'Sentiment Score'
+            }
+        };
+
+        Plotly.newPlot('positive_chart', [positiveData], layout);
+        Plotly.newPlot('negative_chart', [negativeData], layout);
+    </script>
+</body>
+</html>
